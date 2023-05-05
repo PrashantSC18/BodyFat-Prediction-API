@@ -8,22 +8,28 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Hello World'
+    try:
+        return 'Hello World'
+    except:
+        return jsonify('error:error try again')
 
 @app.route('/predict',methods=['POST'])
 def predict():
-    height = request.form.get('height')
-    neck = request.form.get('neck')
-    waist = request.form.get('waist')
+    try:
+        height = request.form.get('height')
+        neck = request.form.get('neck')
+        waist = request.form.get('waist')
 
-    # result = {'height':height,'neck':neck,'waist':waist}
-    # return jsonify(result)
+        # result = {'height':height,'neck':neck,'waist':waist}
+        # return jsonify(result)
 
-    input_query = np.array([[height,neck,waist]],dtype=float)
-    # print(input_query)
-    result = model.predict(input_query)[0]
+        input_query = np.array([[height,neck,waist]],dtype=float)
+        # print(input_query)
+        result = model.predict(input_query)[0]
 
-    return jsonify({'Category':str(result)})
+        return jsonify({'Category':str(result)})
+    except:
+        return jsonify('error:error try again')
 
 
 
